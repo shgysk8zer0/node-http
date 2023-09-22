@@ -1,19 +1,22 @@
-import { FORM_MULTIPART, FORM_URL_ENCODED } from './types.js';
+import { FORM_MULTIPART, FORM_URL_ENCODED, OCTET_STREAM } from './types.js';
 
 const PATTERN = /^(\r\n)*(?:Content-Disposition:\s*form-data;\s*name="(?<name>[^"]*)";?)(?:\s*filename="(?<filename>[^"]*)")?;?(?:\r\nContent-Type:\s*(?<contentType>[^\r\n]+))?;?(\r\n){2}(?<data>[^]*)?(\r\n)$/i;
 
 /**
- * Parse multipart/form-data and create a FormData object from a Response object.
- * @param {Request|Response} response - The Response object containing headers and body.
- * @see https://datatracker.ietf.org/doc/html/rfc7578
- * @returns {Promise<FormData>} - A promise that resolves to a FormData object.
+ * Parse a multipart/form-data body and extract form fields and files.
+ *
+ * @param {string} body - The raw string of the multipart/form-data body.
+ * @param {string} contentType - The Content-Type header specifying the boundary.
+ * @returns {FormData} - A FormData object containing the parsed data.
+ * @throws {TypeError} - If the body or contentType is not a string.
+ * @throws {Error} - If the contentType is not valid for multipart/form-data.
  */
-
-export async function parseMultipartFormData(response) {
-	const contentType = response.headers.get('Content-Type');
-	const body = await response.text();
-
-	if (typeof contentType !== 'string' || ! contentType.startsWith(FORM_MULTIPART)) {
+export function parseMultipartFormData(body, contentType) {
+	if (typeof body !== 'string') {
+		throw new TypeError('body must be a string.');
+	} else	if (typeof contentType !== 'string') {
+		throw new TypeError('contentType must be a string.');
+	} else if (! contentType.startsWith(FORM_MULTIPART)) {
 		throw new Error(`Invalid Content-Type, expected ${FORM_MULTIPART}`);
 	}
 
@@ -26,7 +29,7 @@ export async function parseMultipartFormData(response) {
 			const { name, filename, contentType, data = '' } = PATTERN.exec(part)?.groups ?? {};
 
 			if (typeof filename === 'string') {
-				formData.append(name, new File([data], filename, { type: contentType ?? 'application/octet-stream' }));
+				formData.append(name, new File([data], filename, { type: contentType ?? OCTET_STREAM }));
 			} else {
 				formData.append(name, data);
 			}
@@ -36,26 +39,53 @@ export async function parseMultipartFormData(response) {
 	return formData;
 }
 
-
 /**
- * Parse application/x-www-form-urlencoded data from a Response object.
- * @param {Request|Response} response - The Response object containing headers and body.
- * @returns {Promise<FormData>} - A promise that resolves to a FormData object.
+ * Parse a URL-encoded form data body and convert it into FormData.
+ *
+ * @param {string} body - The raw string of the URL-encoded form data body.
+ * @param {string} contentType - The Content-Type header specifying the encoding.
+ * @returns {FormData} - A FormData object containing the parsed data.
+ * @throws {TypeError} - If the body or contentType is not a string.
+ * @throws {Error} - If the contentType is not valid for URL-encoded form data.
  */
-export async function parseUrlEncodedFormData(response) {
-	const contentType = response.headers.get('Content-Type');
-	const body = await response.text();
-
-	if (typeof contentType !== 'string' || ! contentType.startsWith(FORM_URL_ENCODED)) {
+export function parseUrlEncodedFormData(body, contentType) {
+	if (typeof body !== 'string') {
+		throw new TypeError('body must be a string.');
+	} else	if (typeof contentType !== 'string') {
+		throw new TypeError('contentType must be a string.');
+	} else if (! contentType.startsWith(FORM_URL_ENCODED)) {
 		throw new Error(`Invalid Content-Type, expected ${FORM_URL_ENCODED}`);
 	}
 
 	const params = new URLSearchParams(body);
-	const data = new FormData();
+	const formData = new FormData();
 
 	for (const [key, value] of params) {
-		data.append(key, value);
+		formData.append(key, value);
 	}
 
-	return data;
+	return formData;
+}
+
+/**
+ * Parse the raw body data based on the content type and return it as FormData.
+ *
+ * @param {string} body - The raw body data to be parsed.
+ * @param {string} contentType - The Content-Type header specifying the encoding.
+ * @returns {FormData} - A FormData object containing the parsed data.
+ * @throws {TypeError} - If the body or contentType is not a string.
+ * @throws {Error} - If the contentType is not supported or invalid.
+ */
+export function parseFormData(body, contentType) {
+	if (typeof contentType !== 'string') {
+		throw new TypeError('contentType must be a string.');
+	} else if (typeof body !== 'string') {
+		throw new TypeError('body must be a string.');
+	} else if (contentType.startsWith(FORM_MULTIPART)) {
+		return parseMultipartFormData(body, contentType);
+	} else if (contentType === FORM_URL_ENCODED) {
+		return parseUrlEncodedFormData(body, contentType);
+	} else {
+		throw new Error(`Unsupported contentType: ${contentType}`);
+	}
 }

@@ -16,3 +16,4 @@ export const SVG = 'image/svg+xml';
 export const MARKDOWN = 'text/markdown';
 export const FORM_URL_ENCODED = 'application/x-www-form-urlencoded';
 export const FORM_MULTIPART = 'multipart/form-data';
+export const OCTET_STREAM = 'application/octet-stream';

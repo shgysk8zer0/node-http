@@ -1,4 +1,4 @@
-if (! (globalThis.File instanceof Function)) {
+if (globalThis.Blob instanceof Function && ! (globalThis.File instanceof Function)) {
 	globalThis.File = class File extends Blob {
 		#name;
 		#lastModified;

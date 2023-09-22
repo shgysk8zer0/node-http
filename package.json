@@ -1,11 +1,12 @@
 {
   "name": "@shgysk8zer0/http",
   "version": "1.0.0",
-  "description": "A template repo for npm packages",
-  "keywords": ["http", "http-status", "http-error"],
+  "description": "A JavaScript library that provides various utilities for working with HTTP",
+  "keywords": ["http", "http-status", "http-error","form-data", "http-cookie", "file-object"],
   "type": "module",
   "main": "http.cjs",
   "module": "http.js",
+  "unpkg": "./http.js",
   "exports": {
     ".": {
       "import": "./http.js",
