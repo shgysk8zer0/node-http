@@ -1,6 +1,6 @@
 import { FORM_MULTIPART, FORM_URL_ENCODED, OCTET_STREAM } from './types.js';
 
-const PATTERN = /^(\r\n)*(?:Content-Disposition:\s*form-data;\s*name="(?<name>[^"]*)";?)(?:\s*filename="(?<filename>[^"]*)")?;?(?:\r\nContent-Type:\s*(?<contentType>[^\r\n]+))?;?(\r\n){2}(?<data>[^]*)?(\r\n)$/i;
+const PATTERN = /^(\r\n)?(?:Content-Disposition:\s?form-data;\s?name="(?<name>[^"]*)";?)(?:\s?filename="(?<filename>[^"]*)")?;?(?:\r\nContent-Type:\s?(?<contentType>[^\r\n]+))?;?(\r\n){2}(?<data>[^])?(\r\n)?$/i;
 
 /**
  * Parse a multipart/form-data body and extract form fields and files.
