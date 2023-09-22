@@ -40,7 +40,7 @@ export async function parseMultipartFormData(response) {
 /**
  * Parse application/x-www-form-urlencoded data from a Response object.
  * @param {Request|Response} response - The Response object containing headers and body.
- * @returns {Promise<object>} - A promise that resolves to an object containing parsed form data.
+ * @returns {Promise<FormData>} - A promise that resolves to a FormData object.
  */
 export async function parseUrlEncodedFormData(response) {
 	const contentType = response.headers.get('Content-Type');
