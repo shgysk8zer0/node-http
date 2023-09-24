@@ -48,7 +48,7 @@ npm i @shgysk8zer0/http
 ### NPM Imports
 ```js
 import { HTTPError } from 'shgysk8zer0/http@shgysk8zer0/http/error.js';
-import { NOT_IMPLEMENTED } from 'shgysk8zer0/http@shgysk8zer0/http/status.js';
+import { NOT_IMPLEMENTED, INTERNAL_SERVER_ERROR } from 'shgysk8zer0/http@shgysk8zer0/http/status.js';
 import { JSON } from 'shgysk8zer0/http@shgysk8zer0/http/types.js';
 import { Cookie } from 'shgysk8zer0/http@shgysk8zer0/http/cookie.js';
 ```
@@ -60,32 +60,46 @@ It is designed to be versatile and is not limited to a specific Node.js environm
 
 ```js
 import { HTTPError } from 'https://unpkg.com/@shgysk8zer0/http/error.js';
-import { NOT_IMPLEMENTED } from 'https://unpkg.com/@shgysk8zer0/http/status.js';
+import { NOT_IMPLEMENTED, INTERNAL_SERVER_ERROR } from 'https://unpkg.com/@shgysk8zer0/http/status.js';
 import { JSON } from 'https://unpkg.com/@shgysk8zer0/http/types.js';
 import { Cookie } from 'https://unpkg.com/@shgysk8zer0/http/cookie.js';
 ```
 
 ### Example Code
 
+```js
 export async function handler() {
-  const error = new HTTPError('Not implemented.', {
-    status: NOT_IMPLEMENTED,
-    cause: new Error('I have not done this yet...'),
-  });
-  
-  return new Response([error], {
-    status: error.status,
-    headers: new Headers({
-      'Content-Type': JSON,
-      'Set-Cookie': new Cookie('uid', crypto.randomUUID(), {
-        domain: 'example.com',
-        path: '/foo',
-        maxAge: 86_400_000,
-        sameSite: 'Strict',
-        httpOnly: true,
-        partitioned: true,
-      }
-    }),
-  });
+  try {
+    const error = new HTTPError('Not implemented.', {
+      status: NOT_IMPLEMENTED,
+      cause: new Error('I have not done this yet...'),
+    });
+    
+    throw err;
+  } catch (err) {
+    if (err instanceof HTTPError) { // Error has an HTTP status & message for use by client
+      return Response.json(error, {
+        status: error.status,
+        headers: new Headers({
+          'Content-Type': JSON,
+          'Set-Cookie': new Cookie('uid', crypto.randomUUID(), {
+            domain: 'example.com',
+            path: '/foo',
+            maxAge: 86_400_000,
+            sameSite: 'Strict',
+            httpOnly: true,
+            partitioned: true,
+          })
+        }),
+      });  
+    } else { // It is not an HTTPError and may contain sensitive into
+      return Response.json({
+        error: {
+          messsage: 'Something broke :(',
+          status: INTERNAL_SERVER_ERROR,
+        }
+      }, { status: INTERNAL_SERVER_ERROR });
+    }
+  }  
 }
 ```
