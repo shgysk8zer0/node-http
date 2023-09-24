@@ -5,6 +5,8 @@ const PATTERN = /^(\r\n)?(?:Content-Disposition:\s?form-data;\s?name="(?<name>[^
 /**
  * Parse a multipart/form-data body and extract form fields and files.
  *
+ * @deprecated This function is potentially vulnerable to ReDoS attacks and is not necessary in node >= 20
+ * @see https://github.com/shgysk8zer0/node-http/issues/2
  * @param {string} body - The raw string of the multipart/form-data body.
  * @param {string} contentType - The Content-Type header specifying the boundary.
  * @returns {FormData} - A FormData object containing the parsed data.
@@ -12,6 +14,8 @@ const PATTERN = /^(\r\n)?(?:Content-Disposition:\s?form-data;\s?name="(?<name>[^
  * @throws {Error} - If the contentType is not valid for multipart/form-data.
  */
 export function parseMultipartFormData(body, contentType) {
+	console.warn('parseMultipartFormData() is deprecated and will be removed in version 2.0.0');
+
 	if (typeof body !== 'string') {
 		throw new TypeError('body must be a string.');
 	} else	if (typeof contentType !== 'string') {

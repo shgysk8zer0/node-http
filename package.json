@@ -1,8 +1,14 @@
 {
   "name": "@shgysk8zer0/http",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A JavaScript library that provides various utilities for working with HTTP",
-  "keywords": ["http", "http-status", "http-error","form-data", "http-cookie", "file-object"],
+  "keywords": [
+    "http",
+    "http-status",
+    "http-error",
+    "http-cookie",
+    "node-http"
+  ],
   "type": "module",
   "main": "http.cjs",
   "module": "http.js",
@@ -11,6 +17,9 @@
     ".": {
       "import": "./http.js",
       "require": "./http.cjs"
+    },
+    "./*.js": {
+      "import": "./*"
     },
     "./*": {
       "import": "./*.js"
