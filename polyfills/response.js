@@ -1,5 +1,5 @@
-import { UNKNOWN_ERROR, FOUND, OK } from '../status.js';
-import { JSON as TYPE_JSON } from '../types.js';
+import { UNKNOWN_ERROR, FOUND, OK } from '@shgysk8zer0/consts/status.js';
+import { JSON as TYPE_JSON } from '@shgysk8zer0/consts/types.js';
 
 if (globalThis.Response instanceof Function) {
 	if (! (Response.error instanceof Function)) {

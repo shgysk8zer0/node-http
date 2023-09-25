@@ -1,4 +1,4 @@
-import { FORM_MULTIPART, FORM_URL_ENCODED, OCTET_STREAM } from './types.js';
+import { FORM_MULTIPART, FORM_URL_ENCODED, OCTET_STREAM } from '@shgysk8zer0/consts/mimes.js';
 
 const PATTERN = /^(\r\n)?(?:Content-Disposition:\s?form-data;\s?name="(?<name>[^"]*)";?)(?:\s?filename="(?<filename>[^"]*)")?;?(?:\r\nContent-Type:\s?(?<contentType>[^\r\n]+))?;?(\r\n){2}(?<data>[^])?(\r\n)?$/i;
 
@@ -46,6 +46,7 @@ export function parseMultipartFormData(body, contentType) {
 /**
  * Parse a URL-encoded form data body and convert it into FormData.
  *
+ * @deprecated Node >= 20 offers native form data handling via `await new Request().formData()`
  * @param {string} body - The raw string of the URL-encoded form data body.
  * @param {string} contentType - The Content-Type header specifying the encoding.
  * @returns {FormData} - A FormData object containing the parsed data.

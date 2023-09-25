@@ -6,13 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.2] - 2023-09-25
+
+### Added
+- Install and use `@shgysk8zer0/consts`
+- Export all modules as CommonJS in `/cjs/`
+
+### Fixed
+- Fix `imports` in `package.json` to work with `@shgysk8zer0/http/module` as well as `@shgysk8zer0/http/module.js`
+
 ## [v1.0.1] - 2023-09-24
 
 ### Deprecated
 -  Deprecated `parseMultipartFormData()` due to [ReDoS  issue](https://github.com/shgysk8zer0/node-http/issues/2)
-
-### Fixed
-- Fix `imports` in `package.json` to work with `@shgysk8zer0/http/module` as well as `@shgysk8zer0/http/module.js`
 
 ## [v1.0.0] - 2023-09-22
 
