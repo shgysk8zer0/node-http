@@ -18,10 +18,6 @@
       "import": "./http.js",
       "require": "./cjs/http.cjs"
     },
-    "./*": {
-      "import": "./*.js",
-      "require": "./cjs/*.cjs"
-    },
     "./*.js": {
       "import": "./*",
       "require": "./cjs/*.cjs"
