@@ -1,6 +1,6 @@
 {
   "name": "@shgysk8zer0/http",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A JavaScript library that provides various utilities for working with HTTP",
   "keywords": [
     "http",
@@ -16,13 +16,15 @@
   "exports": {
     ".": {
       "import": "./http.js",
-      "require": "./http.cjs"
+      "require": "./cjs/http.cjs"
     },
     "./*.js": {
-      "import": "./*"
+      "import": "./*",
+      "require": "./cjs/*.cjs"
     },
     "./*": {
-      "import": "./*.js"
+      "import": "./*",
+      "require": "./cjs/*.cjs"
     }
   },
   "engines": {
@@ -64,6 +66,11 @@
   },
   "homepage": "https://github.com/shgysk8zer0/node-http#readme",
   "devDependencies": {
-    "@shgysk8zer0/js-utils": "^1.0.1"
+    "@rollup/plugin-node-resolve": "^15.2.1",
+    "@shgysk8zer0/js-utils": "^1.0.1",
+    "@shgysk8zer0/npm-utils": "^1.1.0"
+  },
+  "dependencies": {
+    "@shgysk8zer0/consts": "^1.0.3"
   }
 }

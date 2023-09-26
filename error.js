@@ -1,4 +1,4 @@
-import { INTERNAL_SERVER_ERROR } from './status.js';
+import { INTERNAL_SERVER_ERROR } from '@shgysk8zer0/consts/status.js';
 
 export class HTTPError extends Error {
 	#status = INTERNAL_SERVER_ERROR;
