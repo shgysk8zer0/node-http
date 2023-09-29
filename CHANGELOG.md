@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.3] - 2023-09-29
+
+### Added
+- Add `HTTPError.toResponse()` method
+- Add functions to get status codes and file/mime types
+
+### Changed
+- Update `@shgysk8zer0/consts`
+
 ## [v1.0.2] - 2023-09-25
 
 ### Added
