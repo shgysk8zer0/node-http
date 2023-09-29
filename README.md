@@ -31,11 +31,15 @@ A JavaScript library that provides various utilities for working with HTTP
 
 - Exported constants for common HTTP status codes, such as `ok` for 200.
 - An extended `HTTPError` class that inherits from Error.
-- Form data parsing that mirrors browser behavior, allowing `formData.get('file')` to return a File object.
 - Useful polyfills, including an extended `File` object (derived from `Blob`) and `URL.canParse()` for URL validation.
-- A set of constants for commonly used Content-Types.
+- A set of constants for commonly used Content-Types (from `@shgysk8zer0/consts`).
 - A versatile `openLink()` function compatible with various JavaScript environments.
 - A `Cookie` class for working with HTTP cookies, enabling easy cookie creation and management.
+
+> [!WARNING]
+> Parsing of form data uses regex which has been reported as [vulnerable to ReDoS](https://github.com/shgysk8zer0/node-http/issues/2)
+> attacks. `parseMultipartFormData()` is deprecated and will be removed in an
+> upcoming release. Instead, in node > 18 you can use `new Request(body, { headers }).formData()`.
 
 ## Installation
 

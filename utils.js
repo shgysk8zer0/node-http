@@ -1,3 +1,9 @@
+import * as EXTS from '@shgysk8zer0/consts/exts.js';
+import * as MIMES from '@shgysk8zer0/consts/mimes.js';
+import * as STATUS from '@shgysk8zer0/consts/status.js';
+import * as STATUS_TEXT from '@shgysk8zer0/consts/status-text.js';
+import { extname } from 'node:path';
+
 export async function openLink(url, base) {
 	if (typeof url === 'string') {
 		return openLink(new URL(url, base));
@@ -29,5 +35,24 @@ export async function openLink(url, base) {
 					throw new Error(`Unknown platform: ${process.platform}.`);
 			}
 		});
+	}
+}
+
+export function getStatusText(code) {
+	const [key] = Object.entries(STATUS).find(([,stat]) => stat === code) ?? [];
+
+	return STATUS_TEXT[key] ?? '';
+}
+
+export function getMimeType(path) {
+	const ext = extname(path).toLowerCase();
+	console.log({ path, ext });
+
+	if (ext.length !== 0) {
+		const [key] = Object.entries(EXTS).find(([,exts]) => exts.includes(ext)) ?? [];
+
+		return MIMES[key] ?? '';
+	} else {
+		return '';
 	}
 }

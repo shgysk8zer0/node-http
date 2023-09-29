@@ -82,6 +82,10 @@ export class HTTPError extends Error {
 		};
 	}
 
+	toResponse({ headers } = {}) {
+		return Response.json(this, { status: this.status, headers });
+	}
+
 	static async fromResponse(resp, { cause } = {}) {
 		if (! (resp instanceof Response)) {
 			throw new TypeError('resp must be a Response object.');
