@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.4] - 2023-10-01
+
+### Changed
+- Update `@shgysk8zer0/consts`
+- Mark all used `@shgysk8zer0/consts` as external
+
 ## [v1.0.3] - 2023-09-29
 
 ### Added

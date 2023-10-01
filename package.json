@@ -1,6 +1,6 @@
 {
   "name": "@shgysk8zer0/http",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A JavaScript library that provides various utilities for working with HTTP",
   "keywords": [
     "http",
@@ -38,7 +38,7 @@
     "lint:js": "eslint .",
     "fix:js": "eslint . --fix",
     "build": "npm run build:js",
-    "build:js": "rollup -c rollup.config.js",
+    "build:js": "rm -f ./cjs/*.cjs && rollup -c rollup.config.js",
     "create:lock": "npm i --package-lock-only --ignore-scripts --no-audit --no-fund",
     "version:bump": "npm run version:bump:patch",
     "version:bump:patch": "npm version --no-git-tag-version patch && npm run create:lock",
@@ -71,6 +71,6 @@
     "@shgysk8zer0/npm-utils": "^1.1.0"
   },
   "dependencies": {
-    "@shgysk8zer0/consts": "^1.0.6"
+    "@shgysk8zer0/consts": "^1.0.7"
   }
 }
