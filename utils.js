@@ -10,7 +10,7 @@ export async function openLink(url, base) {
 	} else if (! (url instanceof URL)) {
 		throw new TypeError('url must be a string or URL object.');
 	} else if (typeof window !== 'undefined') { // browser
-		window.open(url);
+		globalThis.window.open(url);
 	} else if (typeof process !== 'undefined') { // node
 		const { exec } = await import('node:child_process');
 
